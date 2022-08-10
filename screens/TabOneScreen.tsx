@@ -1,15 +1,36 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Button, useForm, useFormDispatch} from '../src';
+import {RootTabScreenProps} from '../types';
+import {ElementType, FormElement} from "../src/contexts/form/types";
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
+const formData: FormElement[] = [
+  {
+    key: 'fName',
+    label: 'Name',
+    type: ElementType.INPUT,
+    fieldData: {
+      defaultValue: 'did i show up',
+    },
+  },
+  {key: 'lName', label: '', type: ElementType.INPUT, fieldData: {}},
+  {key: 'phoneNumber', label: 'Phone Number', type:ElementType.INPUT, fieldData: {}},
+  {key: 'accountType', label: 'Account Type', type:ElementType.DROPDOWN, fieldData: {}},
+  {key: 'accountCategory', label: 'Account Category', type:ElementType.RADIO, fieldData: {}},
+  {key: 'accountSomething', label: 'Account Something', type:ElementType.CHECKBOX, fieldData: {}},
+];
+// const atomsList = ['Button', 'CheckBox', 'DropDown', 'Form', 'Input', 'RadioButton', 'Typography'];
+export default function TabOneScreen({navigation}: RootTabScreenProps<'Atoms'>) {
+  const x = useFormDispatch(formData);
+  const y = useForm();
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+    <View style={{margin: 8}}>
+      {/*{atomsList.map((atom) => (*/}
+      {/*  <React.Fragment key={atom}>*/}
+      {/*    <Text>{atom}</Text>*/}
+      {/*    <View style={styles.separator}/>*/}
+      {/*  </React.Fragment>*/}
+      {/*))}*/}
     </View>
   );
 }
@@ -17,16 +38,16 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 8,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Cairo-ExtraLight'
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    borderWidth: StyleSheet.hairlineWidth,
   },
 });
