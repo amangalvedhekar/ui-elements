@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useReducer} from "react";
-import {Text, TextInput, View} from "react-native";
-import {Button} from "../../atoms";
+import {TextInput, View} from "react-native";
+import {Button, Text} from "../../atoms";
 import {ReducerActionType} from "./types";
 
 const FormContext = createContext({fieldsState: {}, form: []});
@@ -10,7 +10,8 @@ const defaultFieldData = {
   defaultValue: '',
   isRequired: false,
   errorMessage: 'This field is required',
-  validate: (input: string) => {},
+  validate: (input: string) => {
+  },
   isVisible: true,
 }
 
@@ -58,7 +59,7 @@ function FormProvider({children}: any) {
         }}>
           {formState.form?.map(x => (
             <View key={x.key} style={{padding: 8}}>
-              {x.label !== '' && <Text style={{marginVertical: 8}}>{x.label}</Text>}
+              {x.label !== '' && <Text style={{marginVertical: 8}}>{x.label}{formState.fieldsState[x.key]?.isRequired ? ' * ': ''}</Text>}
               <TextInput
                 style={{borderRadius: 16, borderWidth: 1, height: 40, padding: 8}}
                 value={formState.fieldsState[x.key]?.value}
@@ -66,9 +67,12 @@ function FormProvider({children}: any) {
                   type: ReducerActionType.ON_CHANGE,
                   payload: {text, field: x.key}
                 })}
+                {...x.inputProps}
               />
+              {formState.fieldsState[x.key]?.isInErrorState && (
+                <Text textColor='error'>{formState.fieldsState[x.key]?.errorMessage}</Text>)}
             </View>))}
-          <Button label="Submit"/>
+          <Button label="Submit" disabled={true}/>
           {children}
         </View>
       </FormContext.Provider>

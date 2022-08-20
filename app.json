@@ -12,8 +12,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "developmentClient": {
+      "silentLaunch": true
+    },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e42f232d-3d8e-4a81-9d90-5bc545450dd1"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -31,6 +35,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "runtimeVersion": "1.0.0"
   }
 }

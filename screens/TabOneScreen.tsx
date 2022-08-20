@@ -1,5 +1,5 @@
-import {StyleSheet, View} from 'react-native';
-import {Button, useForm, useFormDispatch} from '../src';
+import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from 'react-native';
+import {Button, useForm, useFormDispatch, Text} from '../src';
 import {RootTabScreenProps} from '../types';
 import {ElementType, FormElement} from "../src/contexts/form/types";
 
@@ -9,12 +9,27 @@ const formData: FormElement[] = [
     label: 'Name',
     type: ElementType.INPUT,
     fieldData: {
-      defaultValue: 'did i show up',
+      defaultValue: '',
+      isRequired: true,
     },
+    inputProps: {
+      placeholder: 'first name',
+      returnKeyType: 'next',
+      textContentType: 'emailAddress',
+      keyboardType:'email-address',
+    }
   },
-  {key: 'lName', label: '', type: ElementType.INPUT, fieldData: {}},
-  {key: 'phoneNumber', label: 'Phone Number', type:ElementType.INPUT, fieldData: {}},
-  {key: 'accountType', label: 'Account Type', type:ElementType.DROPDOWN, fieldData: {}},
+  {key: 'lName', label: '', type: ElementType.INPUT, fieldData: {},  inputProps: {
+      placeholder: 'last name'
+    }},
+  {key: 'phoneNumber', label: 'Phone Number', type:ElementType.INPUT, fieldData: {isRequired: true},  inputProps: {
+      placeholder: '+15555555555'
+    }},
+  {key: 'accountType', label: 'Account Type', type:ElementType.DROPDOWN, fieldData: {
+
+    },  inputProps: {
+      placeholder: 'Please Select'
+    }},
   {key: 'accountCategory', label: 'Account Category', type:ElementType.RADIO, fieldData: {}},
   {key: 'accountSomething', label: 'Account Something', type:ElementType.CHECKBOX, fieldData: {}},
 ];
@@ -24,14 +39,9 @@ export default function TabOneScreen({navigation}: RootTabScreenProps<'Atoms'>) 
   const y = useForm();
 
   return (
-    <View style={{margin: 8}}>
-      {/*{atomsList.map((atom) => (*/}
-      {/*  <React.Fragment key={atom}>*/}
-      {/*    <Text>{atom}</Text>*/}
-      {/*    <View style={styles.separator}/>*/}
-      {/*  </React.Fragment>*/}
-      {/*))}*/}
-    </View>
+    <>
+      <Text textType='heading'>Form to create account</Text>
+    </>
   );
 }
 

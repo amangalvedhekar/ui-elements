@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
-
+import {useEffect} from "react";
 
 export default function TabTwoScreen() {
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator}/>
+
     </View>
   );
 }
@@ -13,8 +13,7 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   title: {
     fontSize: 20,

@@ -7,6 +7,7 @@ import Navigation from './navigation';
 import {ThemeProvider} from "./src";
 import React from "react";
 import {PortalProvider} from "@gorhom/portal";
+import {lightTheme} from "./src/themes/lightTheme";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -16,16 +17,16 @@ export default function App() {
     return null;
   } else {
     return (
-      <React.StrictMode>
+      <>
         {/*<PortalProvider>*/}
-      <ThemeProvider>
+      <ThemeProvider theme={lightTheme}>
         <SafeAreaProvider>
             <Navigation colorScheme={colorScheme}/>
           <StatusBar/>
         </SafeAreaProvider>
       </ThemeProvider>
         {/*</PortalProvider>*/}
-      </React.StrictMode>
+      </>
     );
   }
 }

@@ -3,7 +3,7 @@ import {useTheme} from "../../themes";
 import {Pressable, Text} from "react-native";
 import {createButtonStyles} from "./styles";
 
-export function Button({ label, ...rest}: ButtonProps) {
+export function Button({ label, disabled, ...rest}: ButtonProps) {
   const theme = useTheme();
   const styles = createButtonStyles(theme);
   return (
@@ -12,8 +12,8 @@ export function Button({ label, ...rest}: ButtonProps) {
       ({pressed}) => [
         styles.pressable,
         {
-          backgroundColor: pressed ? theme.colors.ui.primaryDisabled: theme.colors.ui.primary,
-          borderColor: pressed ? theme.colors.ui.primaryDisabled: theme.colors.ui.primary,
+          backgroundColor: pressed || disabled ? theme.colors.ui.primaryDisabled: theme.colors.ui.primary,
+          borderColor: pressed || disabled ? theme.colors.ui.primaryDisabled: theme.colors.ui.primary,
         }
       ]}
       {...rest}

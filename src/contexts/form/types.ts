@@ -1,3 +1,5 @@
+import {TextInputProps} from "react-native";
+
 export enum ElementType {
   INPUT = 'INPUT',
   RADIO = 'RADIO',
@@ -6,9 +8,11 @@ export enum ElementType {
 }
 export enum ReducerActionType {
   LOAD_FORM = 'LOAD_FORM',
-  ON_CHANGE = 'ON_CHANGE'
+  ON_CHANGE = 'ON_CHANGE',
+  ON_SUBMIT = 'ON_SUBMIT',
+  RESET = 'RESET',
 }
-
+// export type TextInput = typeof TextInputProps
 export enum ReducerActionType {
 
 }
@@ -25,6 +29,7 @@ export interface FormElement {
     validate?: (input: string) => boolean;
     isVisible?: boolean;
   }
+  inputProps?: TextInputProps
 }
 
 export interface FormState {
