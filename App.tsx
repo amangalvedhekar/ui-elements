@@ -8,6 +8,8 @@ import {ThemeProvider} from "./src";
 import React from "react";
 import {PortalProvider} from "@gorhom/portal";
 import {lightTheme} from "./src/themes/lightTheme";
+import {SafeAreaView, View} from "react-native";
+import {darkTheme} from "./src/themes/darkTheme";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -17,16 +19,17 @@ export default function App() {
     return null;
   } else {
     return (
-      <>
+      <SafeAreaProvider>
         {/*<PortalProvider>*/}
-      <ThemeProvider theme={lightTheme}>
-        <SafeAreaProvider>
+      <ThemeProvider theme={colorScheme === 'light' ? lightTheme: darkTheme}>
+        <>
+
             <Navigation colorScheme={colorScheme}/>
-          <StatusBar/>
-        </SafeAreaProvider>
+        </>
+        <StatusBar/>
       </ThemeProvider>
         {/*</PortalProvider>*/}
-      </>
+      </SafeAreaProvider>
     );
   }
 }

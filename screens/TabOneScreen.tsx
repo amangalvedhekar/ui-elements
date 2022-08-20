@@ -1,4 +1,4 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from 'react-native';
+import {KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {Button, useForm, useFormDispatch, Text} from '../src';
 import {RootTabScreenProps} from '../types';
 import {ElementType, FormElement} from "../src/contexts/form/types";
@@ -15,32 +15,38 @@ const formData: FormElement[] = [
     inputProps: {
       placeholder: 'first name',
       returnKeyType: 'next',
-      textContentType: 'emailAddress',
-      keyboardType:'email-address',
+      textContentType: 'givenName',
+      keyboardType:'default',
     }
   },
   {key: 'lName', label: '', type: ElementType.INPUT, fieldData: {},  inputProps: {
-      placeholder: 'last name'
+      placeholder: 'last name',
+      returnKeyType: 'next',
+      textContentType: 'familyName',
+      keyboardType:'default',
     }},
   {key: 'phoneNumber', label: 'Phone Number', type:ElementType.INPUT, fieldData: {isRequired: true},  inputProps: {
-      placeholder: '+15555555555'
+      placeholder: '+15555555555',
+      returnKeyType: 'next',
+      textContentType: 'telephoneNumber',
+      keyboardType:'numeric',
     }},
-  {key: 'accountType', label: 'Account Type', type:ElementType.DROPDOWN, fieldData: {
-
-    },  inputProps: {
-      placeholder: 'Please Select'
-    }},
-  {key: 'accountCategory', label: 'Account Category', type:ElementType.RADIO, fieldData: {}},
-  {key: 'accountSomething', label: 'Account Something', type:ElementType.CHECKBOX, fieldData: {}},
+  // {key: 'accountType', label: 'Account Type', type:ElementType.DROPDOWN, fieldData: {
+  //
+  //   },  inputProps: {
+  //     placeholder: 'Please Select'
+  //   }},
+  // {key: 'accountCategory', label: 'Account Category', type:ElementType.RADIO, fieldData: {}},
+  // {key: 'accountSomething', label: 'Account Something', type:ElementType.CHECKBOX, fieldData: {}},
 ];
 // const atomsList = ['Button', 'CheckBox', 'DropDown', 'Form', 'Input', 'RadioButton', 'Typography'];
-export default function TabOneScreen({navigation}: RootTabScreenProps<'Atoms'>) {
+export default function TabOneScreen() {
   const x = useFormDispatch(formData);
   const y = useForm();
 
   return (
     <>
-      <Text textType='heading'>Form to create account</Text>
+      <Text textType='regular'>Some information not related to form</Text>
     </>
   );
 }

@@ -1,27 +1,28 @@
-
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {NavigationContainer,  useNavigationContainerRef} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {FontAwesome} from '@expo/vector-icons';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer, useNavigationContainerRef} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
-
+import {ColorSchemeName, Pressable, ScrollView, View} from 'react-native';
+import {useTheme} from "../src/themes";
 import useColorScheme from '../src/hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import {FormProvider} from "../src";
-import { useFlipper } from '@react-navigation/devtools';
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+import {useFlipper} from '@react-navigation/devtools';
+import {SafeAreaView} from "react-native-safe-area-context";
+
+export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
   const navigationRef = useNavigationContainerRef();
 
   useFlipper(navigationRef);
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootNavigator />
+      <RootNavigator/>
     </NavigationContainer>
   );
 }
@@ -34,15 +35,17 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Root">
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} options={{
-          animation: 'fade'
-        }} />
-      </Stack.Group>
-    </Stack.Navigator>
+    <SafeAreaView style={{flex: 1}} edges={['top']} mode="margin">
+      <Stack.Navigator initialRouteName="Root">
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{headerShown: false}}/>
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
+        <Stack.Group screenOptions={{presentation: 'modal'}}>
+          <Stack.Screen name="Modal" component={ModalScreen} options={{
+            animation: 'fade'
+          }}/>
+        </Stack.Group>
+      </Stack.Navigator>
+    </SafeAreaView>
   );
 }
 
@@ -53,28 +56,40 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
+  // const colorScheme = useColorScheme();
+const theme = useTheme();
   return (
     <BottomTab.Navigator
       initialRouteName="Atoms"
-      >
+      screenOptions={{
+        headerShown: false
+      }}
+    >
       <BottomTab.Screen
         name="Atoms"
-        children={({navigation, route}) => <FormProvider><TabOneScreen navigation={navigation} route={route}/></FormProvider>}
-        options={({ navigation }: RootTabScreenProps<'Atoms'>) => ({
-          title: 'Atoms',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        children={({navigation, route}) => (
+          <>
+            <ScrollView contentContainerStyle={{flex: 1,backgroundColor: theme.colors.background.main}}>
+            <FormProvider>
+              <TabOneScreen />
+            </FormProvider>
+            </ScrollView>
+          </>
+        )}
+        options={({navigation}: RootTabScreenProps<'Atoms'>) => ({
+          title: 'Form',
+          tabBarHideOnKeyboard: true,
+          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
+              style={({pressed}) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
                 name="info-circle"
                 size={25}
-                style={{ marginRight: 15 }}
+                style={{marginRight: 15}}
               />
             </Pressable>
           ),
@@ -85,7 +100,7 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Mapbox-v8.6',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
         }}
       />
     </BottomTab.Navigator>
@@ -99,5 +114,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={30} style={{marginBottom: -3}} {...props} />;
 }

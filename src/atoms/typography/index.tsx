@@ -6,7 +6,7 @@ import {CustomTextProps} from "./types";
 const createStyles = (fonts, colors, textType, textColor) => StyleSheet.create({
   text: {
     ...fonts.fonts[textType],
-    fontSize: fonts.fontSizes[0],
+    fontSize: fonts.fontSizes[1],
     color: colors.text[textColor],
     textAlign: 'left',
   }

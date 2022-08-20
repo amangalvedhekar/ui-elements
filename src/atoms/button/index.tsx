@@ -18,7 +18,7 @@ export function Button({ label, disabled, ...rest}: ButtonProps) {
       ]}
       {...rest}
     >
-      <Text style={[styles.text, {fontSize: theme.fonts.fontSizes[0]}]}>
+      <Text style={[styles.text, {fontSize: theme.fonts.fontSizes[1]}]}>
         {label}
       </Text>
     </Pressable>

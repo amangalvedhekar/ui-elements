@@ -35,4 +35,4 @@ export const fonts = {
   },
 };
 
-export const fontSizes = [16, 24, 32, 40, 48];
+export const fontSizes = [8, 16, 24, 32, 40, 48];

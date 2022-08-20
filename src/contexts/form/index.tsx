@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useReducer} from "react";
-import {TextInput, View} from "react-native";
-import {Button, Text} from "../../atoms";
+import {View} from "react-native";
+import {Button, Text, Input} from "../../atoms";
 import {ReducerActionType} from "./types";
 
 const FormContext = createContext({fieldsState: {}, form: []});
@@ -41,7 +41,19 @@ function formReducer(state, action) {
           ...state.fieldsState,
           [action.payload.field]: {
             ...state.fieldsState[action.payload.field],
-            value: action.payload.text
+            value: action.payload.text,
+            isInErrorState: action.payload.text === '' ? true : false,
+          }
+        }
+      };
+    case ReducerActionType.ON_BLUR:
+      return {
+        ...state,
+        fieldsState: {
+          ...state.fieldsState,
+          [action.payload.field]: {
+            ...state.fieldsState[action.payload.field],
+            isInErrorState: state.fieldsState[action.payload.field].value === '' ? true : false,
           }
         }
       };
@@ -55,25 +67,41 @@ function FormProvider({children}: any) {
     <FormDispatchContext.Provider value={formDispatch}>
       <FormContext.Provider value={formState}>
         <View style={{
-          marginHorizontal: 16
+          marginHorizontal: 16,
+          justifyContent: 'center',
+          flex: 1,
         }}>
-          {formState.form?.map(x => (
-            <View key={x.key} style={{padding: 8}}>
-              {x.label !== '' && <Text style={{marginVertical: 8}}>{x.label}{formState.fieldsState[x.key]?.isRequired ? ' * ': ''}</Text>}
-              <TextInput
-                style={{borderRadius: 16, borderWidth: 1, height: 40, padding: 8}}
-                value={formState.fieldsState[x.key]?.value}
-                onChangeText={(text) => formDispatch({
-                  type: ReducerActionType.ON_CHANGE,
-                  payload: {text, field: x.key}
-                })}
-                {...x.inputProps}
-              />
-              {formState.fieldsState[x.key]?.isInErrorState && (
-                <Text textColor='error'>{formState.fieldsState[x.key]?.errorMessage}</Text>)}
-            </View>))}
-          <Button label="Submit" disabled={true}/>
-          {children}
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            {formState.form?.map((x, idx) => (
+              <View key={x.key} style={{padding: 8}}>
+                {x.label !== '' && <Text
+                    style={{marginVertical: 8}}>{x.label}{formState.fieldsState[x.key]?.isRequired ? ' * ' : ''}</Text>}
+                <Input
+                  isInErrorState={formState.fieldsState[x.key]?.isInErrorState}
+                  value={formState.fieldsState[x.key]?.value}
+                  onChangeText={(text) => formDispatch({
+                    type: ReducerActionType.ON_CHANGE,
+                    payload: {text, field: x.key}
+                  })}
+                  onBlur={() => formDispatch({
+                    type: ReducerActionType.ON_BLUR,
+                    payload: {
+                      field: x.key,
+                    }
+                  })}
+                  autoFocus={idx === 0}
+                  testID={`${x.key}-input-field`}
+                  {...x.inputProps}
+                />
+                {formState.fieldsState[x.key]?.isInErrorState && (
+                  <Text textColor='error'>{formState.fieldsState[x.key]?.errorMessage}</Text>)}
+              </View>))}
+            <View style={{paddingTop: 16}}>
+              <Button label="Submit"/>
+            </View>
+
+            {children}
+          </View>
         </View>
       </FormContext.Provider>
     </FormDispatchContext.Provider>

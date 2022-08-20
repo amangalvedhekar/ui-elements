@@ -40,6 +40,7 @@ export const darkBrandColors = {
 
 export const darkUIColors = {
   primary: 'rgba(255,255,255, 1)',
+  primaryDisabled: 'rgba(255,255,255, 0.6)',
   secondary: 'rgba(161,161,161, 1)',
   tertiary: 'rgba(60,60,60, 1)',
   quaternary: 'rgba(38,38,38, 1)',

@@ -9,6 +9,7 @@ export enum ElementType {
 export enum ReducerActionType {
   LOAD_FORM = 'LOAD_FORM',
   ON_CHANGE = 'ON_CHANGE',
+  ON_BLUR = 'ON_BLUR',
   ON_SUBMIT = 'ON_SUBMIT',
   RESET = 'RESET',
 }
