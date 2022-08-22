@@ -3,9 +3,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer, useNavigationContainerRef} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {ColorSchemeName, Pressable, ScrollView, View} from 'react-native';
-import {useTheme} from "../src/themes";
-import useColorScheme from '../src/hooks/useColorScheme';
+import {ColorSchemeName, Pressable, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
+import {useTheme} from "../src";
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
@@ -34,9 +33,22 @@ export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const theme = useTheme();
   return (
-    <SafeAreaView style={{flex: 1}} edges={['top']} mode="margin">
-      <Stack.Navigator initialRouteName="Root">
+    <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background.main}} edges={['top']} mode="padding">
+      <Stack.Navigator initialRouteName="Form">
+        <Stack.Screen name="Form" children={({navigation, route}) => (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{flex: 1}}
+          >
+            <ScrollView contentContainerStyle={{flex: 1, backgroundColor: theme.colors.background.main}}>
+              <FormProvider>
+                <TabOneScreen/>
+              </FormProvider>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        )} options={{headerShown: false}}/>
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{headerShown: false}}/>
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
@@ -57,7 +69,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   // const colorScheme = useColorScheme();
-const theme = useTheme();
+
   return (
     <BottomTab.Navigator
       initialRouteName="Atoms"
@@ -69,10 +81,10 @@ const theme = useTheme();
         name="Atoms"
         children={({navigation, route}) => (
           <>
-            <ScrollView contentContainerStyle={{flex: 1,backgroundColor: theme.colors.background.main}}>
-            <FormProvider>
-              <TabOneScreen />
-            </FormProvider>
+            <ScrollView contentContainerStyle={{flex: 1, backgroundColor: theme.colors.background.main}}>
+              <FormProvider>
+                <TabOneScreen/>
+              </FormProvider>
             </ScrollView>
           </>
         )}

@@ -4,7 +4,7 @@ export const createInputStyles = (theme: any, isInErrorState: boolean) => StyleS
   inputBox: {
     borderRadius: 8,
     borderWidth: 1,
-    height: 40,
+color: theme.colors.text.primary,
     padding: 8,
     borderColor: isInErrorState ? theme.colors.ui.error : theme.colors.ui.primary,
   }

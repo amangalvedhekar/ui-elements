@@ -31,6 +31,19 @@ const formData: FormElement[] = [
       textContentType: 'telephoneNumber',
       keyboardType:'numeric',
     }},
+  {key: 'email', label: 'Email', type:ElementType.INPUT, fieldData: {isRequired: true},  inputProps: {
+      placeholder: 'some@sample.com',
+      returnKeyType: 'next',
+      textContentType: 'emailAddress',
+      keyboardType:'email-address',
+    }},
+
+  {key: 'address', label: 'Address', type:ElementType.INPUT, fieldData: {isRequired: true},  inputProps: {
+      placeholder: 'current address',
+      returnKeyType: 'go',
+      textContentType: 'fullStreetAddress',
+      keyboardType:'default',
+    }},
   // {key: 'accountType', label: 'Account Type', type:ElementType.DROPDOWN, fieldData: {
   //
   //   },  inputProps: {
