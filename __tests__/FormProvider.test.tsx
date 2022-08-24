@@ -60,7 +60,7 @@ const ComponentToTest = () => {
     </>
   );
 }
-describe('Form Provider', async () => {
+describe('Form Provider',  () => {
   it('sets up form', () => {
     render(
       <FormProvider>
@@ -68,7 +68,7 @@ describe('Form Provider', async () => {
       </FormProvider>
     );
     fireEvent.changeText(screen.getByPlaceholderText('last name'), 'Abcd');
-    screen.debug();
+    // screen.debug();
     // expect(screen.getByText('This field is required')).toBeDefined();
   });
 })
