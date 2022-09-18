@@ -6,9 +6,7 @@ import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './navigation';
 import {ThemeProvider} from "./src";
 import React from "react";
-import {PortalProvider} from "@gorhom/portal";
 import {lightTheme} from "./src/themes/lightTheme";
-import {SafeAreaView, View} from "react-native";
 import {darkTheme} from "./src/themes/darkTheme";
 
 export default function App() {
@@ -21,13 +19,10 @@ export default function App() {
     return (
       <SafeAreaProvider>
         {/*<PortalProvider>*/}
-      <ThemeProvider theme={colorScheme === 'light' ? lightTheme: darkTheme}>
-        <>
-
-            <Navigation colorScheme={colorScheme}/>
-        </>
-        <StatusBar/>
-      </ThemeProvider>
+        <ThemeProvider theme={colorScheme === 'light' ? lightTheme : darkTheme}>
+          <Navigation colorScheme={colorScheme}/>
+          <StatusBar/>
+        </ThemeProvider>
         {/*</PortalProvider>*/}
       </SafeAreaProvider>
     );

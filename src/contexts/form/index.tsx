@@ -71,7 +71,7 @@ function FormProvider({children}: any) {
           justifyContent: 'center',
           flex: 1,
         }}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
+          <View style={{flex: 1}}>
             {formState.form?.map((x, idx) => (
               <View key={x.key} style={{padding: 8}}>
                 {x.label !== '' && <Text

@@ -42,7 +42,7 @@ function RootNavigator() {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{flex: 1}}
           >
-            <ScrollView contentContainerStyle={{flex: 1, backgroundColor: theme.colors.background.main}}>
+            <ScrollView contentContainerStyle={{flex: 1, flexDirection: 'column', backgroundColor: theme.colors.background.main}}>
               <FormProvider>
                 <TabOneScreen/>
               </FormProvider>
