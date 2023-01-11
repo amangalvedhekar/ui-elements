@@ -28,7 +28,7 @@ function formReducer(state, action) {
           isVisible: elm?.fieldData?.isVisible ?? defaultFieldData.isVisible,
           isInErrorState: false,
         },
-      }), {});
+      }), {showForm: true});
       return {
         ...state,
         fieldsState,
@@ -66,7 +66,7 @@ function FormProvider({children}: any) {
   return (
     <FormDispatchContext.Provider value={formDispatch}>
       <FormContext.Provider value={formState}>
-        <View style={{
+     <View style={{
           marginHorizontal: 16,
           justifyContent: 'center',
           flex: 1,

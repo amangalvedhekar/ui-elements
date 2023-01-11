@@ -252,7 +252,7 @@ android {
             // Detox-specific additions to pro-guard
             def detoxProguardRulesPath = new File(["node", "--print", "require.resolve('detox/package.json')"].execute(null, rootDir).text.trim(), "../android/detox/proguard-rules-app.pro")
             proguardFile(detoxProguardRulesPath)
-            
+
         }
     }
 
@@ -337,8 +337,11 @@ dependencies {
     }
 
     if (enableHermes) {
-        debugImplementation files(new File(["node", "--print", "require.resolve('hermes-engine/package.json')"].execute(null, rootDir).text.trim(), "../android/hermes-debug.aar"))
-        releaseImplementation files(new File(["node", "--print", "require.resolve('hermes-engine/package.json')"].execute(null, rootDir).text.trim(), "../android/hermes-release.aar"))
+//         debugImplementation files(new File(["node", "--print", "require.resolve('hermes-engine/package.json')"].execute(null, rootDir).text.trim(), "../android/hermes-debug.aar"))
+//         releaseImplementation files(new File(["node", "--print", "require.resolve('hermes-engine/package.json')"].execute(null, rootDir).text.trim(), "../android/hermes-release.aar"))
+        implementation("com.facebook.react:hermes-engine:+") {
+            exclude group:'com.facebook.fbjni'
+        }
     } else {
         implementation jscFlavor
     }

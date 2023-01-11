@@ -36,20 +36,24 @@ function RootNavigator() {
   const theme = useTheme();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background.main}} edges={['top']} mode="padding">
-      <Stack.Navigator initialRouteName="Form">
-        <Stack.Screen name="Form" children={({navigation, route}) => (
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{flex: 1}}
-          >
-            <ScrollView contentContainerStyle={{flex: 1, flexDirection: 'column', backgroundColor: theme.colors.background.main}}>
-              <FormProvider>
-                <TabOneScreen/>
-              </FormProvider>
+      <Stack.Navigator initialRouteName="Root">
+        <Stack.Screen name="Form" options={{headerShown: false}}>
+          {(props) => (
+            <ScrollView style={{flex: 1, backgroundColor: theme.colors.background.main}} {...props}>
+              <KeyboardAvoidingView
+                behavior={"position"}
+
+              >
+                <FormProvider>
+                  <TabOneScreen/>
+                </FormProvider>
+              </KeyboardAvoidingView>
             </ScrollView>
-          </KeyboardAvoidingView>
-        )} options={{headerShown: false}}/>
-        <Stack.Screen name="Root" component={BottomTabNavigator} options={{headerShown: false}}/>
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Root" options={{headerShown: false}}>
+          {(props) =><BottomTabNavigator {...props} theme={theme}/>}
+        </Stack.Screen>
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
         <Stack.Group screenOptions={{presentation: 'modal'}}>
           <Stack.Screen name="Modal" component={ModalScreen} options={{
@@ -67,14 +71,18 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-function BottomTabNavigator() {
+function BottomTabNavigator({theme}) {
   // const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Atoms"
+
       screenOptions={{
-        headerShown: false
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.colors.background.main
+        }
       }}
     >
       <BottomTab.Screen
@@ -111,7 +119,7 @@ function BottomTabNavigator() {
         name="Molecules"
         component={TabTwoScreen}
         options={{
-          title: 'Mapbox-v8.6',
+          title: 'Atoms',
           tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
         }}
       />

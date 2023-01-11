@@ -58,9 +58,7 @@ export default function TabOneScreen() {
   const y = useForm();
 
   return (
-    <>
       <Text textType='regular'>Some information not related to form</Text>
-    </>
   );
 }
 
